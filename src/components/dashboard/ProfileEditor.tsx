@@ -783,7 +783,7 @@ export function ProfileEditor({ variant = "verified" }: { variant?: ProfileVaria
       {/* Compacte studiokop: tier-balk en tabs blijven bij het scrollen staan en
           nemen samen nauwelijks hoogte in, zodat de live preview hoger begint. */}
       {/* RIJ 1 — profielstatus & URL-balk */}
-      <div className="flex flex-col gap-3 rounded-2xl border border-border bg-card/50 p-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex min-w-0 max-w-full flex-col gap-3 overflow-hidden rounded-2xl border border-border bg-card/50 p-3 sm:flex-row sm:items-center sm:justify-between sm:p-4">
         <div className="flex min-w-0 items-center gap-2">
           <span
             className={cn(
@@ -826,7 +826,7 @@ export function ProfileEditor({ variant = "verified" }: { variant?: ProfileVaria
             />
           </button>
         </div>
-        <div className="flex flex-wrap items-center gap-2 sm:shrink-0 sm:flex-nowrap">
+        <div className="flex w-full min-w-0 flex-wrap items-center gap-2 sm:w-auto sm:shrink-0 sm:flex-nowrap">
           <button
             type="button"
             onClick={undo}
@@ -853,7 +853,7 @@ export function ProfileEditor({ variant = "verified" }: { variant?: ProfileVaria
             rel="noopener noreferrer"
             className="inline-flex h-9 shrink-0 items-center justify-center gap-1.5 rounded-xl border border-border px-3 text-xs font-medium transition-colors hover:bg-muted"
           >
-            <Eye className="h-3.5 w-3.5" aria-hidden /> Bekijk live profiel ↗
+            <Eye className="h-3.5 w-3.5" aria-hidden /> <span className="hidden min-[400px]:inline sm:inline">Bekijk live profiel ↗</span><span className="min-[400px]:hidden sm:hidden">Live ↗</span>
           </a>
           <Button
             type="button"

@@ -4,7 +4,7 @@ import type { ProfileDisplayPrefs } from "@/lib/profile-display";
 
 type SetPref = <K extends keyof ProfileDisplayPrefs>(key: K, value: ProfileDisplayPrefs[K]) => void;
 
-/** 💬 Live Status & Gedachten: statusbolletje + statuslijn. */
+/** 💬 Live Status & Gedachten: status indicator + status bericht. */
 export function LiveStatusAccordion({ prefs, setPref }: { prefs: ProfileDisplayPrefs; setPref: SetPref }) {
   return (
     <AccordionItem value="live_status" className="rounded-2xl border border-border bg-card px-4 sm:px-5">

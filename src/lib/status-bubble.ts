@@ -4,10 +4,15 @@ export type BubblePosition = (typeof BUBBLE_POSITIONS)[number];
 
 export const BUBBLE_STYLES = [
   { id: "obsidian-flat", label: "Obsidian" },
-  { id: "cartoon-outline", label: "Cartoon" },
   { id: "glassmorphism", label: "Glass" },
-  { id: "neon-glow", label: "Neon" },
-  { id: "colorful", label: "Kleurrijk" },
+  { id: "bubble", label: "Bubble" },
+  { id: "cartoon-outline", label: "Cartoon" },
+  { id: "nature", label: "Natuur" },
+  { id: "ornate", label: "Sierlijk" },
+  { id: "techno", label: "Techno" },
+  { id: "fire", label: "Vuur" },
+  { id: "water", label: "Water" },
+  { id: "earth", label: "Aarde" },
 ] as const;
 export type BubbleStyle = (typeof BUBBLE_STYLES)[number]["id"];
 

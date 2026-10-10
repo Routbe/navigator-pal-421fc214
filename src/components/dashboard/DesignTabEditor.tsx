@@ -5,6 +5,7 @@
  * Alle wijzigingen gaan rechtstreeks naar de state van de ProfileEditor, zodat
  * het sticky voorbeeld live meebeweegt.
  */
+import { SlidersHorizontal } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
@@ -211,11 +212,29 @@ export function DesignPresetSection({
 
   return (
     <section className="space-y-3">
-      <div>
-        <p className="text-sm font-medium">ROUT-presets</p>
-        <p className="mt-1 text-xs text-muted-foreground">
-          Eén klik zet kleuren, knoppen en typografie in één luxe ROUT-stijl.
-        </p>
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <p className="text-sm font-medium">ROUT-presets</p>
+          <p className="mt-1 text-xs text-muted-foreground">
+            Eén klik zet kleuren, knoppen en typografie in één luxe ROUT-stijl.
+          </p>
+        </div>
+        <button
+          type="button"
+          aria-label="Achtergrond aanpassen"
+          aria-expanded={prefs.backgroundCustom}
+          aria-controls="bg-advanced"
+          title="Achtergrond aanpassen"
+          onClick={() => setPref("backgroundCustom", !prefs.backgroundCustom)}
+          className={cn(
+            "mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition-colors",
+            prefs.backgroundCustom
+              ? "border-primary/50 bg-primary/10 text-primary"
+              : "border-border text-muted-foreground hover:text-foreground",
+          )}
+        >
+          <SlidersHorizontal className="h-4 w-4" />
+        </button>
       </div>
       <div className="grid grid-cols-3 gap-3 sm:grid-cols-4">
         {ROUT_PRESETS.map((p) => {

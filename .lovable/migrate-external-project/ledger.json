@@ -1,0 +1,69 @@
+{
+  "source": "github",
+  "repo": "https://github.com/Routbe/navigator-pal-85d19dcb.git",
+  "capabilities": [
+    {
+      "capability": "application_code",
+      "source": "git clone (951 src files, TanStack Start)",
+      "outcome": "copied into project working tree \u2014 build OK, homepage verified in preview",
+      "status": "done",
+      "next_action": "install deps, verify build"
+    },
+    {
+      "capability": "database_schema",
+      "source": "db/*.sql (133 idempotent migrations, Neon Postgres)",
+      "outcome": "preserve Neon as external database per repo architecture (Vercel deploy, least-privilege rout_app)",
+      "status": "pending",
+      "next_action": "needs DATABASE_URL + MIGRATION_URL secrets"
+    },
+    {
+      "capability": "records",
+      "source": "none attached",
+      "outcome": "pending",
+      "status": "pending",
+      "next_action": "request CSV/JSON exports from Neon dashboard after preview"
+    },
+    {
+      "capability": "auth",
+      "source": "better-auth + WebAuthn passkeys + OIDC provider + social providers",
+      "outcome": "preserve better-auth against Neon (repo architecture rule)",
+      "status": "pending",
+      "next_action": "needs auth secret + provider keys"
+    },
+    {
+      "capability": "storage",
+      "source": "Scaleway Object Storage (S3-compatible)",
+      "outcome": "preserve provider",
+      "status": "pending",
+      "next_action": "needs S3 credentials"
+    },
+    {
+      "capability": "payments",
+      "source": "Stripe checkout + webhook, bunq, Wise/banking webhook",
+      "outcome": "preserve providers",
+      "status": "pending",
+      "next_action": "needs Stripe keys + webhook secret"
+    },
+    {
+      "capability": "email",
+      "source": "Brevo transactional templates",
+      "outcome": "preserve provider",
+      "status": "pending",
+      "next_action": "needs Brevo API key"
+    },
+    {
+      "capability": "public_endpoints",
+      "source": "api_.public.* routes, cron endpoints, .well-known OIDC",
+      "outcome": "copied with code \u2014 build OK, homepage verified in preview",
+      "status": "done",
+      "next_action": "verify after build"
+    },
+    {
+      "capability": "secrets",
+      "source": ".env.example / ENVIRONMENT.md",
+      "outcome": "none present in repo (good)",
+      "status": "pending",
+      "next_action": "collect via secret form at verification time"
+    }
+  ]
+}

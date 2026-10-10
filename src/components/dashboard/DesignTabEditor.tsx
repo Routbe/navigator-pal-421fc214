@@ -280,10 +280,6 @@ export function DesignWallpaperSection({
   const open = prefs.backgroundCustom;
   return (
     <section className="space-y-4">
-      <div className="flex items-start justify-between gap-4 rounded-xl border border-border p-3">
-        <div><p className="text-sm font-medium">Achtergrond aanpassen</p><p className="mt-1 text-xs text-muted-foreground">Uit: het gekozen ROUT-preset bepaalt alles. Aan: kleur, verloop, textuur en effecten zelf kiezen.</p></div>
-        <Switch aria-label="Achtergrond aanpassen" aria-expanded={open} aria-controls="bg-advanced" checked={open} onCheckedChange={(v) => setPref("backgroundCustom", v)} />
-      </div>
       <div
         id="bg-advanced"
         className={cn(

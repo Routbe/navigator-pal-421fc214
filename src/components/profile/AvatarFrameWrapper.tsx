@@ -196,9 +196,10 @@ export function AvatarFrameWrapper({
         <span
           title={status.label}
           aria-label={status.label === "Verborgen" ? "Status" : status.label}
-          className="absolute bottom-0 right-0 flex h-[30%] w-[30%] min-h-4 min-w-4 items-center justify-center leading-none [container-type:size]"
+          className="absolute bottom-0 right-0 flex h-[32%] w-[32%] min-h-5 min-w-5 items-center justify-center rounded-full leading-none [container-type:size]"
+          style={{ background: theme.card, boxShadow: `0 0 0 3px ${theme.bg}` }}
         >
-          <span className="text-[80cqh] drop-shadow-[0_1px_2px_rgba(0,0,0,0.45)]" aria-hidden>{emoji}</span>
+          <span className="text-[62cqh]" aria-hidden>{emoji}</span>
         </span>
       ) : presence !== "none" && (
         <span

@@ -1,8 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
-import { AvatarFrameWrapper } from "@/components/profile/AvatarFrameWrapper";
-import { StatusBubble } from "@/components/profile/StatusBubble";
 import { PRESENCE_DEFS } from "@/lib/avatar-decorations";
 import { BUBBLE_FONTS, BUBBLE_STYLES, singleEmoji, type BubblePosition } from "@/lib/status-bubble";
 import type { ProfileDisplayPrefs } from "@/lib/profile-display";
@@ -13,25 +11,45 @@ const pill = (on: boolean) =>
 
 /** Links tab: what the status says (dot state + short text). */
 export function StatusContentSettings({ prefs, setPref, bare = false }: { prefs: ProfileDisplayPrefs; setPref: SetPref; bare?: boolean }) {
+  const useEmoji = prefs.presenceIndicator === "emoji";
   return (
     <section className={bare ? "space-y-4" : "space-y-4 rounded-2xl border border-border bg-card p-4 sm:p-5"}>
       <div className={bare ? "hidden" : undefined}>
         <h2 className="text-lg font-medium">💬 Status</h2>
-        <p className="mt-1 text-sm text-muted-foreground">Je statusbolletje en een korte tekst die als ballonnetje bij je avatar zweeft. Het uiterlijk kies je in Design &amp; styling.</p>
+        <p className="mt-1 text-sm text-muted-foreground">Je status indicator en een korte tekst die als ballonnetje bij je avatar zweeft. Het uiterlijk kies je in Design &amp; styling.</p>
       </div>
       <div className="space-y-2">
-        <p className="input-label">Statusbolletje</p>
+        <p className="input-label">Status indicator</p>
         <div className="flex flex-wrap gap-2">
-          {PRESENCE_DEFS.map((p) => (
-            <button key={p.id} type="button" title={p.hint} aria-pressed={prefs.presence === p.id} onClick={() => setPref("presence", p.id)} className={cn(pill(prefs.presence === p.id), "flex items-center gap-2")}>
-              <span aria-hidden className="h-2.5 w-2.5 rounded-full border border-border" style={{ background: p.color }} />
-              {p.label}
-            </button>
-          ))}
+          {PRESENCE_DEFS.map((p) => {
+            const on = !useEmoji && prefs.presence === p.id;
+            return (
+              <button key={p.id} type="button" title={p.hint} aria-pressed={on} onClick={() => { setPref("presence", p.id); if (useEmoji) setPref("presenceIndicator", "color"); }} className={cn(pill(on), "flex items-center gap-2")}>
+                <span aria-hidden className="h-2.5 w-2.5 rounded-full border border-border" style={{ background: p.color }} />
+                {p.label}
+              </button>
+            );
+          })}
+          <button type="button" aria-pressed={useEmoji} onClick={() => setPref("presenceIndicator", "emoji")} className={cn(pill(useEmoji), "flex items-center gap-2")}>
+            <span aria-hidden>{prefs.presenceEmoji ?? "😎"}</span> Custom / Emoji
+          </button>
         </div>
+        {useEmoji ? (
+          <div className="flex items-center gap-3 pt-1">
+            <Input aria-label="Status-emoji" inputMode="text" defaultValue={prefs.presenceEmoji ?? ""}
+              onChange={(e) => { const ok = singleEmoji(e.target.value); if (ok || !e.target.value) setPref("presenceEmoji", ok); }}
+              placeholder="😎" className="h-12 w-16 text-center text-2xl" />
+            <p className="text-xs text-muted-foreground">Precies één emoji. Die verschijnt in het rondje op je profielfoto.</p>
+          </div>
+        ) : (
+          <div className="flex items-center justify-between gap-4 pt-1">
+            <div><p className="text-sm font-medium">Icoon toevoegen</p><p className="text-xs text-muted-foreground">Vinkje, maan of streepje over de kleur.</p></div>
+            <Switch aria-label="Icoon toevoegen" checked={prefs.presenceIndicator === "color_with_icon"} onCheckedChange={(on) => setPref("presenceIndicator", on ? "color_with_icon" : "color")} />
+          </div>
+        )}
       </div>
       <div className="space-y-1.5">
-        <p className="input-label">Statuslijn</p>
+        <p className="input-label">Status bericht</p>
         <Input value={prefs.statusLine ?? ""} maxLength={60} onChange={(e) => setPref("statusLine", e.target.value || null)} placeholder="Wat ben je aan het doen? (Max 60 tekens)" className="h-10 text-xs" />
         <p className="text-xs text-muted-foreground">{(prefs.statusLine ?? "").length}/60 tekens · leeg = geen ballon.</p>
       </div>
@@ -49,47 +67,8 @@ const POS_LABEL: Record<BubblePosition, string> = {
 export function StatusDesignSettings({ prefs, setPref, avatarUrl, theme }: {
   prefs: ProfileDisplayPrefs; setPref: SetPref; avatarUrl: string; theme: { bg: string; card: string; text: string; border: string; muted: string; accent?: string };
 }) {
-  const useEmoji = prefs.presenceIndicator === "emoji";
-  const previewText = prefs.statusLine || "Beschikbaar voor werk";
   return (
-    <div className="space-y-5 border-t border-border pt-4">
-      <div className="flex justify-center rounded-xl border border-border px-4 py-14" style={{ background: theme.bg, color: theme.text }}>
-        <div className="relative inline-flex">
-          <AvatarFrameWrapper frame={prefs.avatarFrame} theme={theme as never} presence={prefs.presence} indicator={prefs.presenceIndicator} emoji={prefs.presenceEmoji}>
-            {avatarUrl ? <img src={avatarUrl} alt="" className="h-16 w-16 rounded-full object-cover" aria-hidden /> : <span className="block h-16 w-16 rounded-full" style={{ background: theme.card }} aria-hidden />}
-          </AvatarFrameWrapper>
-          <StatusBubble text={previewText} position={prefs.statusBubblePosition} bubbleStyle={prefs.statusBubbleStyle} bg={prefs.statusBubbleBg} font={prefs.statusBubbleFont} />
-        </div>
-      </div>
-
-      <div className="space-y-3">
-        <p className="input-label">Statusbolletje — design</p>
-        <div className="flex items-center justify-between gap-4">
-          <div><p className="text-sm font-medium">Icoon toevoegen</p><p className="text-xs text-muted-foreground">Vinkje, maan of streepje over de kleur.</p></div>
-          <Switch aria-label="Icoon toevoegen" checked={prefs.presenceIndicator === "color_with_icon"} onCheckedChange={(on) => setPref("presenceIndicator", on ? "color_with_icon" : "color")} />
-        </div>
-        <div className="flex items-center justify-between gap-4">
-          <div><p className="text-sm font-medium">Eigen emoji gebruiken</p><p className="text-xs text-muted-foreground">Vervangt het gekleurde bolletje door één emoji.</p></div>
-          <Switch aria-label="Eigen emoji gebruiken" checked={useEmoji} onCheckedChange={(on) => setPref("presenceIndicator", on ? "emoji" : "color")} />
-        </div>
-        {useEmoji && (
-          <div className="flex items-center gap-3">
-            <Input
-              aria-label="Status-emoji"
-              inputMode="text"
-              defaultValue={prefs.presenceEmoji ?? ""}
-              onChange={(e) => {
-                const ok = singleEmoji(e.target.value);
-                if (ok || !e.target.value) setPref("presenceEmoji", ok);
-              }}
-              placeholder="😎"
-              className="h-12 w-16 text-center text-2xl"
-            />
-            <p className="text-xs text-muted-foreground">Precies één emoji van je toetsenbord.</p>
-          </div>
-        )}
-      </div>
-
+    <div className="space-y-5 border-t border-border pt-4" data-avatar={avatarUrl ? "1" : "0"} data-theme={theme.bg}>
       <div className="space-y-2">
         <p className="input-label">Ballon — positie</p>
         <div className="grid w-36 grid-cols-3 gap-1.5" role="radiogroup" aria-label="Positie van de statusballon">

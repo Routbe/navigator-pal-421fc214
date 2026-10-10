@@ -54,7 +54,7 @@ export function AvatarDecorationPicker({
 
       {onPresenceChange && presence !== undefined && (
         <div className="space-y-2 border-t border-border pt-4">
-          <p className="input-label">Statusbolletje</p>
+          <p className="input-label">Status indicator</p>
           <div className="flex flex-wrap gap-2">
             {PRESENCE_DEFS.map((p) => (
               <button key={p.id} type="button" onClick={() => onPresenceChange(p.id)} aria-pressed={presence === p.id} className={cn("h-9 rounded-full border px-3 text-[11px]", presence === p.id ? "border-primary/50 bg-primary/10" : "border-border")}>{p.label}</button>

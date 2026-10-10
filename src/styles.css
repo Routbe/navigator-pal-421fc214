@@ -888,9 +888,14 @@ select:focus-visible {
 
 .status-bubble[data-style="cartoon-outline"] { --bb-bg: #ffffff; --bb-fg: #111111; --bb-border: #111111; --bb-bw: 2.5px; --bb-shadow: 3px 3px 0 #111111; font-weight: 700; }
 .status-bubble[data-style="glassmorphism"]   { --bb-bg: rgba(255,255,255,.16); --bb-fg: currentColor; --bb-border: rgba(255,255,255,.35); --bb-tail: rgba(255,255,255,.16); backdrop-filter: blur(12px) saturate(1.4); }
-.status-bubble[data-style="neon-glow"]       { --bb-bg: #070712; --bb-fg: #d9f6ff; --bb-border: #22d3ee; --bb-shadow: 0 0 14px rgba(34,211,238,.55), inset 0 0 8px rgba(34,211,238,.25); }
-.status-bubble[data-style="colorful"]        { --bb-bg: linear-gradient(135deg, #ff5f9e, #ffb347); --bb-tail: #ff8a72; --bb-fg: #ffffff; --bb-border: transparent; }
-.status-bubble[data-style="colorful"][data-custom="1"] { --bb-tail: var(--bb-bg); }
+.status-bubble[data-style="bubble"]  { --bb-bg: #e0f2fe; --bb-fg: #0c4a6e; --bb-border: #7dd3fc; border-radius: 999px; box-shadow: inset 0 -3px 0 rgba(12,74,110,.12); }
+.status-bubble[data-style="nature"]  { --bb-bg: #ecfccb; --bb-fg: #365314; --bb-border: #84cc16; border-radius: 1.2em .4em 1.2em .4em; }
+.status-bubble[data-style="ornate"]  { --bb-bg: #fffbeb; --bb-fg: #78350f; --bb-border: #d4a017; --bb-bw: 1.5px; font-family: ui-serif, Georgia, serif; font-style: italic; outline: 1px solid #d4a017; outline-offset: 2px; }
+.status-bubble[data-style="techno"]  { --bb-bg: #070712; --bb-fg: #d9f6ff; --bb-border: #22d3ee; --bb-shadow: 0 0 14px rgba(34,211,238,.55), inset 0 0 8px rgba(34,211,238,.25); font-family: ui-monospace, monospace; border-radius: 2px; }
+.status-bubble[data-style="fire"]    { --bb-bg: linear-gradient(135deg, #f97316, #dc2626); --bb-tail: #e2481d; --bb-fg: #fff7ed; --bb-border: transparent; --bb-shadow: 0 0 14px rgba(249,115,22,.5); }
+.status-bubble[data-style="water"]   { --bb-bg: linear-gradient(135deg, #38bdf8, #2563eb); --bb-tail: #2f7cf0; --bb-fg: #ffffff; --bb-border: transparent; }
+.status-bubble[data-style="earth"]   { --bb-bg: #78553a; --bb-fg: #fef3c7; --bb-border: #5b3d26; --bb-shadow: 2px 2px 0 #3f2a1a; }
+.status-bubble:is([data-style="fire"],[data-style="water"])[data-custom="1"] { --bb-tail: var(--bb-bg); }
 .status-bubble[data-style="glassmorphism"][data-custom="1"] { --bb-tail: var(--bb-bg); }
 
 @keyframes status-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }

@@ -11,9 +11,9 @@
 
 ## Architecture rules
 - Neon is the only database; runtime connects as least-privilege `rout_app` (`DATABASE_URL`, DML only, BYPASSRLS — access control is server-side). Schema changes are idempotent `db/NN_*.sql` files applied by `scripts/migrate.ts` with owner `MIGRATION_URL`; runtime `create table if not exists` safety nets go through `runSchemaEnsure` so privilege errors are skipped. Why: a leaked app credential must never alter schema or roles.
-- Login ON rout.be (Better Auth, `better-auth.server.ts`) and login VIA rout.be (OIDC provider, `src/lib/oauth/*`) never share config; provider env vars use the `ROUT_PROVIDER_*` prefix. Why: one role must not break the other.
+- Login ON rout.be (Better Auth, `better-auth.server.ts`) and login VIA rout.be (OIDC provider, `src/lib/oauth/*`) never share config; provider env vars use the `ROUT_PROVIDER_*` prefix. Why: one role must never break the other.
 - Sign-in tiles always render; unconfigured providers show a notice. OAuth callbacks for a provider with missing credentials are refused before Better Auth is created with `provider_not_configured` (400) plus a server warning (`api_/auth/$.ts` + `isProviderConfigured`). Why: missing keys must never hide options or crash auth.
-- Public profile visibility (`publicProfile`, `timelineVisible` in `display_prefs`) is enforced server-side in the public profile/timeline server functions. Why: client checks alone leak data.
+- Public profile visibility (`publicProfile`, `timelineVisible` in `display_prefs`) is enforced server-side in the public profile/timeline server functions. Why: client checks leak data.
 - Influencer/business verification hands out names through the `approved_handles` whitelist (db/45); users claim exactly one via `claimApprovedHandle`. Why: the admin approves names, never types them for the user.
 - Bluesky/Mastodon accounts without a provider-verified email are created or linked only after a hashed 6-digit email code (`fediverse-otp.server.ts`, db/46). Why: typed emails alone allow account takeover.
 - Birthdates live in the separate `user_birthdates` table (db/48), written only via `saveMyBirthdate`; verification requests return `birthdate_required` until present. Why: keeps legal data out of profile mass-assignment paths.

@@ -1,8 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
-import { AvatarFrameWrapper } from "@/components/profile/AvatarFrameWrapper";
-import { StatusBubble } from "@/components/profile/StatusBubble";
 import { PRESENCE_DEFS } from "@/lib/avatar-decorations";
 import { BUBBLE_FONTS, BUBBLE_STYLES, singleEmoji, type BubblePosition } from "@/lib/status-bubble";
 import type { ProfileDisplayPrefs } from "@/lib/profile-display";
